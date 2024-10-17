@@ -11,13 +11,21 @@ class Team extends Model
 
     protected $guarded = [];
 
+    // Define the relationship with the User model
     public function members()
     {
         return $this->belongsToMany(User::class, 'team_user', 'team_id', 'user_id');
     }
 
+    // Define the relationship with the Client model
     public function clients()
     {
         return $this->hasMany(Client::class);
+    }
+
+    // Define the relationship with the Company model
+    public function companies()
+    {
+        return $this->hasMany(Company::class, 'team_id');
     }
 }
