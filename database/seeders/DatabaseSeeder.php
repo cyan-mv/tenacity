@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TeamSeeder::class,  // Ensure teams are seeded before clients
             ClientSeeder::class,
+            CompanySeeder::class,
         ]);
 
         // Ensure a team with id '1' is available
