@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\App\Widgets;
 
-use Filament\Widgets\Widget;
-use Filament\Facades\Filament;
-use App\Models\User;
 use App\Models\Team;
+use App\Models\User;
+use Filament\Facades\Filament;
+use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Collection;
 
-
-class TextWidget extends Widget
+class VendorSummary extends Widget
 {
-    protected static string $view = 'filament.widgets.text-widget';
+    protected static string $view = 'filament.app.widgets.vendor-summary';
+//    protected static string $view = 'filament.widgets.text-widget';
 
     public ?User $authenticatedUser;
     public ?string $tenant_id;
@@ -39,4 +39,5 @@ class TextWidget extends Widget
 
         }
     }
+
 }

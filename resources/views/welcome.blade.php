@@ -16,6 +16,11 @@
     @endforeach
 </ul>
 
+<h2>Current Panel</h2>
+{{--<p><strong>Panel ID:</strong> {{ $panelId }}</p>--}}
+<p><strong>Panel Name:</strong> {{ $panelName }}</p>
+
+
 <h2>Can Access First Tenant</h2>
 <p>{{ $canAccessTenant ? 'Yes' : 'No' }}</p>
 
