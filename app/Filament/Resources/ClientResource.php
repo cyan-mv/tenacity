@@ -24,15 +24,29 @@ class ClientResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+//            ->schema([
+//                Forms\Components\TextInput::make('name')
+//                    ->required()
+//                    ->maxLength(255),
+//
+//                Forms\Components\TextInput::make('email')
+//                    ->required()
+//                    ->maxLength(255),
+//            ]);
+             ->schema([
+                 Forms\Components\TextInput::make('name')
+                     ->required()
+                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('email')
-                    ->required()
-                    ->maxLength(255),
-            ]);
+                 Forms\Components\TextInput::make('email')
+                     ->required()
+                     ->maxLength(255),
+
+                 Forms\Components\Select::make('team_id')
+                     ->label('Team')
+                     ->relationship('team', 'name') // Relates to the team model and fetches the name
+                     ->required(),
+             ]);
     }
 
     public static function table(Table $table): Table
