@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Team;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,13 +21,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Assuming you're using Filament::getTenant() to get the current tenant
         view()->composer('*', function ($view) {
-            $tenant = Filament::getTenant();
+            $tenant = Filament::getTenant();  // Get the current tenant (team)
 
             if ($tenant) {
-                // Dynamically set the app name based on the tenant name
-                config(['app.name' => $tenant->name]);
+                // Fetch the related company
+                $company = $tenant->companies->first();  // Assuming one company per team
+
+                if ($company) {
+                    // Dynamically set the app name based on the company name
+                    config(['app.name' => $company->company_name]);
+                } else {
+                    // Set a fallback name if no company is found
+                    config(['app.name' => 'Default Company Name']);
+                }
             }
         });
     }
