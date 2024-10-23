@@ -17,6 +17,11 @@ class Team extends Model
         return $this->belongsToMany(User::class, 'team_user', 'team_id', 'user_id');
     }
 
+    public function branches()
+    {
+        return $this->hasMany(Branch::class, 'team_id');
+    }
+
     // Define the relationship with the Client model
     public function clients()
     {
