@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             CompanySeeder::class,
             UserSeeder::class,
+            BranchSeeder::class,  // Add this line to call the BranchSeeder
         ]);
 
         // Ensure a team with id '1' is available
