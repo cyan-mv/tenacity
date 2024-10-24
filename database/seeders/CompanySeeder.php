@@ -15,8 +15,8 @@ class CompanySeeder extends Seeder
 
         if ($team) {
             Company::create([
-                'company_name' => 'Yum brands',
-                'legal_name' => 'Yum Brands legan name',
+                'company_name' => 'Tech Solutions Inc.',
+                'legal_name' => 'Tech Solutions International',
                 'tax_id' => 'TAX-1234567',
                 'phone' => '555-1234',
                 'address' => '1234 Elm Street, Cityville',
@@ -27,11 +27,11 @@ class CompanySeeder extends Seeder
                 'country' => 'USA',
                 'status' => true, // true for active, false for inactive
                 'logo' => 'https://via.placeholder.com/100x100.png?text=Tech+Solutions',
-                'team_id' => 1, // Set the team ID
+                'team_id' => $team->id, // Set the team ID
             ]);
 
             Company::create([
-                'company_name' => 'Green Earth Corp',
+                'company_name' => 'Green Earth Corp.',
                 'legal_name' => 'Green Earth Corporation',
                 'tax_id' => 'TAX-7654321',
                 'phone' => '555-5678',
@@ -43,7 +43,7 @@ class CompanySeeder extends Seeder
                 'country' => 'USA',
                 'status' => false, // Inactive
                 'logo' => 'https://via.placeholder.com/100x100.png?text=Green+Earth',
-                'team_id' => 2, // Set the team ID
+                'team_id' => $team->id, // Set the team ID
             ]);
         } else {
             // Handle case where no teams exist, if necessary
