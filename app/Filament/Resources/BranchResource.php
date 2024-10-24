@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BranchResource\Pages;
-use App\Filament\Resources\BranchResource\RelationManagers;
+//use App\Filament\Resources\BranchResource\RelationManagers;
 use App\Models\Branch;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -21,6 +21,8 @@ class BranchResource extends Resource
     protected static ?string $model = Branch::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+//    protected static ?string $navigationGroup = 'Companies management';
 
     public static function form(Form $form): Form
     {
