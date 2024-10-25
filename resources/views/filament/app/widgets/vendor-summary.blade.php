@@ -7,6 +7,7 @@
             <p> Tenant clients:
                 {{ $tenant->clients->pluck('name')->implode(',') }}
             </p>
+            <p> Company name: {{ $company_name }} </p> <!-- Display company name -->
         @else
             <p>No authenticated user found.</p>
         @endif
