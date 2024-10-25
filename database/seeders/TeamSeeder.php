@@ -12,10 +12,12 @@ class TeamSeeder extends Seeder
         // You can add as many teams as you like
         Team::create([
             'name' => 'KFC',
+            'company_id' => 1
         ]);
 
         Team::create([
             'name' => 'Pizza hut',
+            'company_id' => 1
         ]);
 
 //        Team::create([

@@ -30,7 +30,8 @@ class VendorSummary extends Widget
             $this->tenant_clients = $this->tenant->clients()->get();
 
             // Fetch the company related to the tenant
-            $this->company_name = optional($this->tenant->companies->first())->company_name ?? 'No company found';
+            $this->company_name = optional($this->tenant->company)->company_name;
         }
     }
+
 }

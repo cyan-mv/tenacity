@@ -29,8 +29,8 @@ class Team extends Model
     }
 
     // Define the relationship with the Company model
-    public function companies()
+    public function company()
     {
-        return $this->hasMany(Company::class, 'team_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

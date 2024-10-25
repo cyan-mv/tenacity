@@ -30,21 +30,21 @@ class CompanySeeder extends Seeder
                 'team_id' => 1, // Set the team ID
             ]);
 
-            Company::create([
-                'company_name' => 'Green Earth Corp.',
-                'legal_name' => 'Green Earth Corporation',
-                'tax_id' => 'TAX-7654321',
-                'phone' => '555-5678',
-                'address' => '789 Oak Street, Townsville',
-                'email' => 'contact@greenearth.com',
-                'website' => 'https://www.greenearth.com',
-                'city' => 'Townsville',
-                'state' => 'Stateburg',
-                'country' => 'USA',
-                'status' => false, // Inactive
-                'logo' => 'https://via.placeholder.com/100x100.png?text=Green+Earth',
-                'team_id' => 2, // Set the team ID
-            ]);
+//            Company::create([
+//                'company_name' => 'Green Earth Corp.',
+//                'legal_name' => 'Green Earth Corporation',
+//                'tax_id' => 'TAX-7654321',
+//                'phone' => '555-5678',
+//                'address' => '789 Oak Street, Townsville',
+//                'email' => 'contact@greenearth.com',
+//                'website' => 'https://www.greenearth.com',
+//                'city' => 'Townsville',
+//                'state' => 'Stateburg',
+//                'country' => 'USA',
+//                'status' => false, // Inactive
+//                'logo' => 'https://via.placeholder.com/100x100.png?text=Green+Earth',
+//                'team_id' => 1, // Set the team ID
+//            ]);
         } else {
             // Handle case where no teams exist, if necessary
             $this->command->warn('No teams found. Please seed the teams table first.');
