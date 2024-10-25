@@ -9,11 +9,18 @@ class Card extends Model
     protected $fillable = [
         'card_number',
         'group_id',
+        'team_id', // Include this field
     ];
 
     // A card belongs to a group
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    // A card belongs to a team
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }

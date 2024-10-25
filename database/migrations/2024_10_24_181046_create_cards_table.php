@@ -12,6 +12,7 @@ class CreateCardsTable extends Migration
             $table->id();
             $table->string('card_number'); // Holds the generated card number
             $table->foreignId('group_id')->constrained('groups')->onDelete('cascade'); // Relation to the group
+            $table->foreignId('team_id')->default(1)->constrained('teams')->onDelete('cascade'); // Relation to the team
             $table->timestamps();
         });
     }
@@ -21,3 +22,4 @@ class CreateCardsTable extends Migration
         Schema::dropIfExists('cards');
     }
 }
+
