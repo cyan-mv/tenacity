@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             } else {
                 // Fallback if there is no tenant
-                config(['app.name' => 'Default Tenant Name']);
+                config(['app.name' => 'Laravel']);
             }
         });
     }
