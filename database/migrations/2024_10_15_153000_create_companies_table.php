@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->boolean('status')->default(1);
             $table->string('logo')->nullable();
             // Add team_id foreign key
-            $table->foreignId('team_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('team_id')->nullable(); // Define the column without foreign key constraint
             $table->timestamps();
         });
     }

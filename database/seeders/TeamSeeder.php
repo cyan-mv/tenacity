@@ -2,26 +2,29 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 use App\Models\Team;
 
 class TeamSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        // You can add as many teams as you like
-        Team::create([
-            'name' => 'KFC',
-            'company_id' => 1
-        ]);
+        // Retrieve the first company created by CompanySeeder
+        $company = Company::first();
 
-        Team::create([
-            'name' => 'Pizza hut',
-            'company_id' => 1
-        ]);
+        if ($company) {
+            Team::create([
+                'name' => 'KFC',
+                'company_id' => $company->id,
+            ]);
 
-//        Team::create([
-//            'name' => 'Team C',
-//        ]);
+            Team::create([
+                'name' => 'Pizza Hut',
+                'company_id' => $company->id,
+            ]);
+        } else {
+            $this->command->warn('No company found. Please seed the companies table first.');
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Team;
@@ -20,14 +21,22 @@ class DatabaseSeeder extends Seeder
 
         // Call other seeders here, ensuring TeamSeeder runs first
         $this->call([
+            CompanySeeder::class,
             TeamSeeder::class,  // Ensure teams are seeded before clients
             ClientSeeder::class,
-            CompanySeeder::class,
             UserSeeder::class,
             BranchSeeder::class,  // Add this line to call the BranchSeeder
             GroupSeeder::class,
 //            CompanySeeder::class,
         ]);
+
+        // Update the company's team_id after both have been seeded
+        $company = Company::first();
+        $team = Team::first();
+
+        if ($company && $team) {
+            $company->update(['team_id' => $team->id]);
+        }
 
         // Ensure a team with id '1' is available
 //        $team = Team::find(1);  // Retrieve the team with id '1'
