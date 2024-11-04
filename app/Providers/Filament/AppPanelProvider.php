@@ -58,9 +58,9 @@ class AppPanelProvider extends PanelProvider
             ->tenant(Team::class)
             ->tenantRegistration(RegisterTeam::class)
             ->registration()
-            ->tenant(Team::class)
-            ->tenantRegistration(RegisterTeam::class)
-            ->registration()
+//            ->tenant(Team::class)
+//            ->tenantRegistration(RegisterTeam::class)
+//            ->registration()
             ;
     }
 }
