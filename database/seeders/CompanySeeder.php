@@ -26,5 +26,22 @@ class CompanySeeder extends Seeder
             'logo' => 'https://via.placeholder.com/100x100.png?text=Yum+Brands',
             // Leave team_id out for now
         ]);
+        Company::create([
+            'company_name' => 'Darden Eats',
+            'legal_name' => 'Darden Dining Corp',
+            'tax_id' => 'TAX-4567890',
+            'phone' => '555-7890',
+            'address' => '789 Culinary Road, Flavor Town',
+            'email' => 'contact@dardeneats.com',
+            'website' => 'https://www.dardeneats.com',
+            'city' => 'Flavor Town',
+            'state' => 'Taste State',
+            'country' => 'USA',
+            'status' => true,
+            'logo' => 'https://via.placeholder.com/100x100.png?text=Darden+Eats',
+            // Leave team_id out for now
+        ]);
+
+
     }
 }

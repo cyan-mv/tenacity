@@ -30,12 +30,17 @@ class UserSeeder extends Seeder
         ];
 
         // Use create() instead of insert() to return User models
+        // Create users and attach them to teams
+
+        // Populate team_user table
         foreach ($users as $userData) {
             $user = User::create($userData);
 
-            // If the user email is cyan.mv@gmail.com, attach teams 1 and 2
+            // Conditional team attachment based on user email
             if ($user->email === 'cyan.mv@gmail.com') {
-                $user->teams()->attach([1, 2]); // Assuming team IDs 1 and 2 exist
+                $user->teams()->attach([1, 2]); // Attaches to teams with IDs 1 and 2
+            } elseif ($user->email === 'venice@gmail.com') {
+                $user->teams()->attach(3); // Attaches to team with ID 3 (or adjust as needed)
             }
         }
     }

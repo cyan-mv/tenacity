@@ -26,5 +26,7 @@ class TeamSeeder extends Seeder
         } else {
             $this->command->warn('No company found. Please seed the companies table first.');
         }
+
+        Team::create(['name' => 'Olive Garden', 'company_id' => 2]);
     }
 }

@@ -31,12 +31,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Update the company's team_id after both have been seeded
-        $company = Company::first();
-        $team = Team::first();
+//        $company = Company::first();
+//        $team = Team::first();
+//
+//        if ($company && $team) {
+//            $company->update(['team_id' => $team->id]);
+//        }
 
-        if ($company && $team) {
-            $company->update(['team_id' => $team->id]);
-        }
+        // Update each company's team_id to the first associated team
+        Company::all()->each(function ($company) {
+            $team = Team::where('company_id', $company->id)->first();
+            if ($team) {
+                $company->update(['team_id' => $team->id]);
+            }
+        });
 
         // Ensure a team with id '1' is available
 //        $team = Team::find(1);  // Retrieve the team with id '1'
