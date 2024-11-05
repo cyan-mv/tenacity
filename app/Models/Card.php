@@ -19,8 +19,15 @@ class Card extends Model
     }
 
     // A card belongs to a team
-    public function team()
+//    public function team()
+//    {
+//        return $this->belongsTo(Team::class);
+//    }
+
+    // In Card.php (Model)
+    public function getTeamsAttribute()
     {
-        return $this->belongsTo(Team::class);
+        return $this->group->teams; // This assumes each card belongs to a group
     }
+
 }
