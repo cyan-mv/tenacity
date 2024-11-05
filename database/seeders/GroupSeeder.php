@@ -10,17 +10,21 @@ class GroupSeeder extends Seeder
 {
     public function run()
     {
-        $team = Team::first(); // Assuming you have at least one team
+        // Create a new group
+        $group = Group::create([
+            'code' => '001',
+            'description' => 'VIP Group',
+            'prefix' => '444',
+            'status' => true,
+            'consecutive_length' => 5,
+        ]);
 
-        if ($team) {
-            Group::create([
-                'code' => '001',
-                'description' => 'VIP Group',
-                'prefix' => '444',
-                'status' => true,
-                'consecutive_length' => 5,
-                'team_id' => $team->id, // Link to the first team
-            ]);
+        // Retrieve multiple teams to associate with this group
+        $teams = Team::take(2)->get(); // Fetch the first 2 teams, adjust as needed
+
+        if ($teams->isNotEmpty()) {
+            // Attach the teams to the group
+            $group->teams()->attach($teams->pluck('id'));
         } else {
             // Handle the case where no teams are found
             $this->command->info('No teams found. Please seed the Team table first.');

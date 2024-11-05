@@ -27,8 +27,9 @@ class Group extends Model
         return $this->prefix . $this->code . str_pad(1, $this->consecutive_length, '0', STR_PAD_LEFT);
     }
 
-    public function team()
+    public function teams()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Team::class, 'group_team', 'group_id', 'team_id');
     }
+
 }

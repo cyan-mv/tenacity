@@ -45,13 +45,23 @@ class GroupResource extends Resource
                         false => 'Inactive',
                     ])
                     ->required(),
-                Select::make('team_id')
-                    ->relationship('team', 'name')
+                Select::make('teams')
+                    ->multiple() // Allow multiple selections
+                    ->relationship('teams', 'name') // Use the teams relationship
                     ->required()
-                    ->label('Brands')
-                ,
+                    ->label('Brands'),
             ]);
     }
+
+// After record creation, attach the selected teams
+    public static function afterCreate($record, array $data): void
+    {
+        // Sync the selected teams with the group
+        if (isset($data['teams'])) {
+            $record->teams()->sync($data['teams']);
+        }
+    }
+
 
 
     public static function table(Table $table): Table
@@ -72,14 +82,19 @@ class GroupResource extends Resource
                 TextColumn::make('consecutive_length')
                     ->label('Consecutive Length')
                     ->sortable(),
-                TextColumn::make('team.name')
+                TextColumn::make('teams.name')
                     ->label('Brands')
                     ->sortable()
-                    ->searchable(),
-                BooleanColumn::make('status')  // Use BooleanColumn for boolean fields
-                ->label('Status'),
+                    ->searchable()
+                    ->formatStateUsing(function ($record) {
+                        // Fetch the team names associated with the group
+                        return $record->teams->pluck('name')->implode(', ');
+                    }),
+                BooleanColumn::make('status')
+                    ->label('Status'),
             ]);
     }
+
 
 
 
