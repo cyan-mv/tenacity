@@ -4,26 +4,26 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Group;
-use App\Models\Company;
+use App\Models\Team;
 
 class GroupSeeder extends Seeder
 {
     public function run()
     {
-        $company = Company::first(); // Assuming you have at least one company
+        $team = Team::first(); // Assuming you have at least one team
 
-        if ($company) {
+        if ($team) {
             Group::create([
                 'code' => '001',
                 'description' => 'VIP Group',
                 'prefix' => '444',
                 'status' => true,
                 'consecutive_length' => 5,
-                'company_id' => $company->id, // Link to the first company
+                'team_id' => $team->id, // Link to the first team
             ]);
         } else {
-            // Handle the case where no companies are found
-            $this->command->info('No companies found. Please seed the Company table first.');
+            // Handle the case where no teams are found
+            $this->command->info('No teams found. Please seed the Team table first.');
         }
     }
 }

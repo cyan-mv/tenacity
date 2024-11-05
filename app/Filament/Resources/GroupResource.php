@@ -45,9 +45,11 @@ class GroupResource extends Resource
                         false => 'Inactive',
                     ])
                     ->required(),
-                Select::make('company_id')
-                    ->relationship('company', 'company_name')
-                    ->required(),
+                Select::make('team_id')
+                    ->relationship('team', 'name')
+                    ->required()
+                    ->label('Brands')
+                ,
             ]);
     }
 
@@ -70,8 +72,8 @@ class GroupResource extends Resource
                 TextColumn::make('consecutive_length')
                     ->label('Consecutive Length')
                     ->sortable(),
-                TextColumn::make('company.company_name')
-                    ->label('Company')
+                TextColumn::make('team.name')
+                    ->label('Brands')
                     ->sortable()
                     ->searchable(),
                 BooleanColumn::make('status')  // Use BooleanColumn for boolean fields

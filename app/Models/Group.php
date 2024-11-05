@@ -26,4 +26,9 @@ class Group extends Model
     {
         return $this->prefix . $this->code . str_pad(1, $this->consecutive_length, '0', STR_PAD_LEFT);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

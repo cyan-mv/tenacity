@@ -33,4 +33,9 @@ class Team extends Model
     {
         return $this->belongsTo(Company::class, 'company_id');
     }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class, 'team_id');
+    }
 }
