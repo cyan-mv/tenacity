@@ -31,5 +31,15 @@ class Group extends Model
     {
         return $this->belongsToMany(Team::class, 'group_team', 'group_id', 'team_id');
     }
+//    public function team()
+//    {
+//        return $this->belongsTo(Team::class);
+//    }
+    public function team()
+    {
+        return $this->belongsToMany(Team::class, 'group_team', 'group_id', 'team_id')->limit(1);
+    }
+
+
 
 }
