@@ -60,6 +60,7 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('logo'),
                 Tables\Columns\TextColumn::make('company_name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('legal_name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('tax_id')->sortable()->searchable(),

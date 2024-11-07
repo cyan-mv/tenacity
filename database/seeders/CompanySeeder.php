@@ -23,7 +23,7 @@ class CompanySeeder extends Seeder
             'state' => 'Stateburg',
             'country' => 'USA',
             'status' => true,
-            'logo' => 'https://via.placeholder.com/100x100.png?text=Yum+Brands',
+            'logo' => 'https://s3-symbol-logo.tradingview.com/yum-brands--600.png',
             // Leave team_id out for now
         ]);
         Company::create([
@@ -38,7 +38,7 @@ class CompanySeeder extends Seeder
             'state' => 'Taste State',
             'country' => 'USA',
             'status' => true,
-            'logo' => 'https://via.placeholder.com/100x100.png?text=Darden+Eats',
+            'logo' => 'https://pbs.twimg.com/profile_images/798611031903891460/shVVWbz3_400x400.jpg',
             // Leave team_id out for now
         ]);
 
