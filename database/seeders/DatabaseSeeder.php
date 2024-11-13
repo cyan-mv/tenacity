@@ -12,19 +12,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Seed a user with specific id '1'
-//        $user = User::factory()->create([
-//            'id' => 1,  // Explicitly setting the ID to 1
-//            'name' => 'cyan',
-//            'email' => 'cyan.mv@gmail.com',
-//            'password' => bcrypt('toast'),
-//        ]);
+        $user = User::factory()->create([
+            'id' => 1,  // Explicitly setting the ID to 1
+            'name' => 'cyan',
+            'email' => 'cyan.mv@gmail.com',
+            'password' => bcrypt('toast'),
+        ]);
 
         // Call other seeders here, ensuring TeamSeeder runs first
         $this->call([
             CompanySeeder::class,
             TeamSeeder::class,  // Ensure teams are seeded before clients
             ClientSeeder::class,
-            UserSeeder::class,
+//            UserSeeder::class,
             BranchSeeder::class,  // Add this line to call the BranchSeeder
             GroupSeeder::class,
 //            CompanySeeder::class,
