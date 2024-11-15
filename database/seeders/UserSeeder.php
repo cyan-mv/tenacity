@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 'email' => 'cyan.mv@gmail.com',
                 'password' => Hash::make('toast'),
                 'client' => null, // No client relationship for this user
-                'teams' => [1, 2], // Teams to attach
+                'teams' => [1, 2],
             ],
             [
                 'name' => 'venice',
@@ -39,9 +39,31 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'agent',
                     'email' => 'agent@gmail.com',
-                    'team_id' => 3, // Team for the client
+                    'team_id' => 3,
                 ],
                 'teams' => [3],
+            ],
+            [
+                'name' => 'Jenna User',
+                'email' => 'jenna@gmail.com',
+                'password' => Hash::make('toast'),
+                'client' => [
+                    'name' => 'Jenna',
+                    'email' => 'jenna@gmail.com',
+                    'team_id' => 1,
+                ],
+                'teams' => [1],
+            ],
+            [
+                'name' => 'Emma User',
+                'email' => 'emma@gmail.com',
+                'password' => Hash::make('toast'),
+                'client' => [
+                    'name' => 'Emma',
+                    'email' => 'emma@gmail.com',
+                    'team_id' => 2,
+                ],
+                'teams' => [2],
             ],
         ];
 
@@ -63,10 +85,9 @@ class UserSeeder extends Seeder
             }
 
             // Attach teams
-            if (isset($userData['teams'])) {
+            if (!empty($userData['teams'])) {
                 $user->teams()->attach($userData['teams']);
             }
-            // Conditional team attachment based on user email
             if ($user->email === 'cyan.mv@gmail.com') {
                 $user->teams()->attach([1, 2]); // Attaches to teams with IDs 1 and 2
             } elseif ($user->email === 'venice@gmail.com') {

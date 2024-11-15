@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CompanySeeder::class,
             TeamSeeder::class,  // Ensure teams are seeded before clients
-            ClientSeeder::class,
+//            ClientSeeder::class,
             UserSeeder::class,
             BranchSeeder::class,  // Add this line to call the BranchSeeder
             GroupSeeder::class,
