@@ -91,4 +91,10 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     {
         return true;
     }
+
+    public function userable()
+    {
+        return $this->morphTo();
+    }
+
 }

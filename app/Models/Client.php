@@ -15,4 +15,10 @@ class Client extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
+    }
+
 }
