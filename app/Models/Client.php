@@ -17,9 +17,8 @@ class Client extends Model
      */
     public function team()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Team::class, 'client_team', 'client_id', 'team_id')->limit(1);
     }
-
 
     public function teams()
     {
