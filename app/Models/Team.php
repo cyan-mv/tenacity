@@ -25,7 +25,7 @@ class Team extends Model
     // Define the relationship with the Client model
     public function clients()
     {
-        return $this->hasMany(Client::class);
+        return $this->belongsToMany(Client::class, 'client_team', 'team_id', 'client_id');
     }
 
     // Define the relationship with the Company model

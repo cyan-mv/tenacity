@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
-//use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -26,71 +25,67 @@ class ClientResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-//            ->schema([
-//                Forms\Components\TextInput::make('name')
-//                    ->required()
-//                    ->maxLength(255),
-//
-//                Forms\Components\TextInput::make('email')
-//                    ->required()
-//                    ->maxLength(255),
-//            ]);
-             ->schema([
-                 Forms\Components\TextInput::make('name')
-                     ->required()
-                     ->maxLength(255),
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
 
-                 Forms\Components\TextInput::make('email')
-                     ->required()
-                     ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->required()
+                    ->maxLength(255),
 
-                 Forms\Components\Select::make('team_id')
-                     ->label('Team')
-                     ->relationship('team', 'name') // Relates to the team model and fetches the name
-                     ->required(),
-             ]);
+                Forms\Components\Select::make('teams')
+                    ->label('Teams')
+                    ->multiple()
+                    ->relationship('teams', 'name')
+                    ->required()
+                    ->preload(),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('team_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('teams.name')
+                    ->label('Teams')
+                    ->formatStateUsing(function ($record) {
+                        // Fetch and implode the team names associated with the client
+                        return $record->teams->pluck('name')->implode(', ');
+                    }),
 
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated At')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
+                    ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

@@ -9,16 +9,30 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'team_id'];
+    // Update the fillable property to exclude 'team_id'
+    protected $fillable = ['name', 'email'];
 
+    /**
+     * Define a many-to-many relationship with the Team model.
+     */
     public function team()
     {
         return $this->belongsTo(Team::class);
     }
 
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'client_team', 'client_id', 'team_id');
+    }
+
+
+
+    /**
+     * Define the polymorphic relationship with the User model.
+     */
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
     }
-
 }

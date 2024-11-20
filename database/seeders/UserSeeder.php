@@ -33,15 +33,15 @@ class UserSeeder extends Seeder
                 'teams' => [3],
             ],
             [
-                'name' => 'agent',
-                'email' => 'agent@gmail.com',
+                'name' => 'clementine',
+                'email' => 'clementine@gmail.com',
                 'password' => Hash::make('toast'),
                 'client' => [
-                    'name' => 'agent',
-                    'email' => 'agent@gmail.com',
-                    'team_id' => 3,
+                    'name' => 'clementine',
+                    'email' => 'clementine@gmail.com',
+                    'teams' => [1, 2, 3], // Clementine belongs to three teams
                 ],
-                'teams' => [3],
+                'teams' => [1, 2, 3],
             ],
             [
                 'name' => 'Jenna User',
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'Jenna',
                     'email' => 'jenna@gmail.com',
-                    'team_id' => 1,
+                    'teams' => [1],
                 ],
                 'teams' => [1],
             ],
@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'Emma',
                     'email' => 'emma@gmail.com',
-                    'team_id' => 2,
+                    'teams' => [2],
                 ],
                 'teams' => [2],
             ],
@@ -71,7 +71,8 @@ class UserSeeder extends Seeder
         foreach ($users as $userData) {
             // Extract client data if present
             $clientData = $userData['client'];
-            unset($userData['client'], $userData['teams']);
+            $clientTeams = $clientData['teams'] ?? [];
+            unset($clientData['teams'], $userData['client'], $userData['teams']);
 
             // Create the user
             $user = User::create($userData);
@@ -79,12 +80,19 @@ class UserSeeder extends Seeder
             // Attach a client if defined
             if ($clientData) {
                 $client = Client::create($clientData);
+
+                // Attach teams to the client
+                if (!empty($clientTeams)) {
+                    $client->teams()->attach($clientTeams);
+                }
+
+                // Associate the client with the user
                 $user->userable_id = $client->id;
                 $user->userable_type = Client::class;
                 $user->save();
             }
 
-            // Attach teams
+            // Attach teams to the user
             if (!empty($userData['teams'])) {
                 $user->teams()->attach($userData['teams']);
             }
@@ -93,6 +101,8 @@ class UserSeeder extends Seeder
             } elseif ($user->email === 'venice@gmail.com') {
                 $user->teams()->attach(3); // Attaches to team with ID 3 (or adjust as needed)
             }
+
+
         }
     }
 }

@@ -46,7 +46,11 @@
             <p>Email: {{ $user->email ?? 'N/A' }}</p>
             @if(isset($user->userable))
                 <p>Client Info: {{ $user->userable->name ?? 'N/A' }}</p>
-                <p>Team ID: {{ $user->userable->team_id ?? 'N/A' }}</p>
+@if(isset($user->userable) && $user->userable->teams)
+    @foreach($user->userable->teams as $team)
+        <p>Team: {{ $team->name }}</p>
+    @endforeach
+@endif
             @endif
         @else
             <p>Please <a href="{{ route('login') }}">login</a> to continue.</p>
