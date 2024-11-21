@@ -17,7 +17,10 @@ class GroupSeeder extends Seeder
             'prefix' => '444',
             'status' => true,
             'consecutive_length' => 5,
+            'color' => '#FF5733', // Example color
+            'image' => 'groups/vip-group.png', // Example image path
         ]);
+
 
         // Retrieve multiple teams to associate with this group
         $teams = Team::take(2)->get(); // Fetch the first 2 teams, adjust as needed

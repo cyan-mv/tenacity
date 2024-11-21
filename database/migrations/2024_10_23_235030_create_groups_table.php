@@ -15,6 +15,8 @@ class CreateGroupsTable extends Migration
             $table->string('prefix', 3); // Similar to 'code'
             $table->boolean('status')->default(true); // Active or inactive status
             $table->unsignedTinyInteger('consecutive_length')->default(5); // Number from 5 to 10
+            $table->string('color')->nullable(); // Hex color or CSS color name
+            $table->string('image')->nullable(); // Path to the image file
 //            $table->foreignId('team_id')->constrained()->onDelete('cascade'); // Relation to Team model
             $table->timestamps();
         });

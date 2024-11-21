@@ -12,8 +12,10 @@ class Group extends Model
         'prefix',
         'status',
         'consecutive_length',
-        'company_id',
+        'color',
+        'image',
     ];
+
 
     // Group belongs to a Company
     public function company()
