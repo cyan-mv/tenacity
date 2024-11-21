@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'clementine', // Explicitly set
                     'email' => 'clementine@gmail.com', // Explicitly set
+                    'teams' => [1, 2, 3], // Teams assigned to the client
                 ],
-                'teams' => [1, 2, 3],
             ],
             [
                 'name' => 'Jenna User',
@@ -49,8 +49,8 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => null, // Dynamically fill later
                     'email' => null, // Dynamically fill later
+                    'teams' => [1], // Teams assigned to the client
                 ],
-                'teams' => [1],
             ],
             [
                 'name' => 'Emma User',
@@ -59,14 +59,15 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => null, // Dynamically fill later
                     'email' => null, // Dynamically fill later
+                    'teams' => [2], // Teams assigned to the client
                 ],
-                'teams' => [2],
             ],
         ];
 
         foreach ($users as $userData) {
-            $clientData = $userData['client'];
-            $teams = $userData['teams'] ?? [];
+            // Extract and unset client and teams data before creating the user
+            $clientData = $userData['client'] ?? null;
+            $userTeams = $userData['teams'] ?? [];
             unset($userData['client'], $userData['teams']);
 
             // Create the user
@@ -74,6 +75,10 @@ class UserSeeder extends Seeder
 
             // Handle the client relationship
             if ($clientData) {
+                // Extract teams for the client
+                $clientTeams = $clientData['teams'] ?? [];
+                unset($clientData['teams']);
+
                 // Dynamically assign client name and email if null
                 $clientData['name'] = $clientData['name'] ?? $userData['name'];
                 $clientData['email'] = $clientData['email'] ?? $userData['email'];
@@ -83,14 +88,14 @@ class UserSeeder extends Seeder
                 $user->save();
 
                 // Attach teams to the client
-                if (!empty($teams)) {
-                    $client->teams()->sync($teams);
+                if (!empty($clientTeams)) {
+                    $client->teams()->sync($clientTeams);
                 }
             }
 
             // Attach teams to the user
-            if (!empty($teams)) {
-                $user->teams()->sync($teams);
+            if (!empty($userTeams)) {
+                $user->teams()->sync($userTeams);
             }
         }
     }
