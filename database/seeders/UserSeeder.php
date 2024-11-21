@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -16,12 +17,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Define users and their client relationships
+        // Define users and their relationships
         $users = [
             [
                 'name' => 'cyan',
                 'email' => 'cyan.mv@gmail.com',
                 'password' => Hash::make('toast'),
+                'admin' => [
+                    'role' => 'admin', // Role for the admin
+                ],
                 'client' => null, // No client relationship for this user
                 'teams' => [1, 2],
             ],
@@ -29,6 +33,9 @@ class UserSeeder extends Seeder
                 'name' => 'venice',
                 'email' => 'venice@gmail.com',
                 'password' => Hash::make('toast'),
+                'admin' => [
+                    'role' => 'admin', // Role for the admin
+                ],
                 'client' => null,
                 'teams' => [3],
             ],
@@ -65,13 +72,22 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $userData) {
-            // Extract and unset client and teams data before creating the user
+            // Extract and unset admin, client, and teams data before creating the user
+            $adminData = $userData['admin'] ?? null;
             $clientData = $userData['client'] ?? null;
             $userTeams = $userData['teams'] ?? [];
-            unset($userData['client'], $userData['teams']);
+            unset($userData['admin'], $userData['client'], $userData['teams']);
 
             // Create the user
             $user = User::create($userData);
+
+            // Handle the admin relationship
+            if ($adminData) {
+                // Create admin and associate
+                $admin = Admin::create($adminData);
+                $user->userable()->associate($admin);
+                $user->save();
+            }
 
             // Handle the client relationship
             if ($clientData) {
@@ -83,6 +99,7 @@ class UserSeeder extends Seeder
                 $clientData['name'] = $clientData['name'] ?? $userData['name'];
                 $clientData['email'] = $clientData['email'] ?? $userData['email'];
 
+                // Create client and associate
                 $client = Client::create($clientData);
                 $user->userable()->associate($client);
                 $user->save();
