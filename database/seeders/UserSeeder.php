@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'name' => 'cyan',
                 'email' => 'cyan.mv@gmail.com',
                 'password' => Hash::make('toast'),
-                'client' => null,
+                'client' => null, // No client relationship for this user
                 'teams' => [1, 2],
             ],
             [
@@ -37,37 +37,36 @@ class UserSeeder extends Seeder
                 'email' => 'clementine@gmail.com',
                 'password' => Hash::make('toast'),
                 'client' => [
-                    'name' => 'clementine',
-                    'email' => 'clementine@gmail.com',
+                    'name' => 'clementine', // Explicitly set
+                    'email' => 'clementine@gmail.com', // Explicitly set
                 ],
-                // 'teams' => [1, 2, 3],
+                'teams' => [1, 2, 3],
             ],
             [
                 'name' => 'Jenna User',
                 'email' => 'jenna@gmail.com',
                 'password' => Hash::make('toast'),
                 'client' => [
-                    'name' => 'Jenna',
-                    'email' => 'jenna@gmail.com',
+                    'name' => null, // Dynamically fill later
+                    'email' => null, // Dynamically fill later
                 ],
-                // 'teams' => [1],
+                'teams' => [1],
             ],
             [
                 'name' => 'Emma User',
                 'email' => 'emma@gmail.com',
                 'password' => Hash::make('toast'),
                 'client' => [
-                    'name' => 'Emma',
-                    'email' => 'emma@gmail.com',
+                    'name' => null, // Dynamically fill later
+                    'email' => null, // Dynamically fill later
                 ],
-                // 'teams' => [2],
+                'teams' => [2],
             ],
         ];
 
         foreach ($users as $userData) {
-            // Extract client data if present
-            $clientData = $userData['client'] ?? null;
-            $teams = $userData['teams'] ?? []; // Provide a default empty array for teams
+            $clientData = $userData['client'];
+            $teams = $userData['teams'] ?? [];
             unset($userData['client'], $userData['teams']);
 
             // Create the user
@@ -75,17 +74,21 @@ class UserSeeder extends Seeder
 
             // Handle the client relationship
             if ($clientData) {
+                // Dynamically assign client name and email if null
+                $clientData['name'] = $clientData['name'] ?? $userData['name'];
+                $clientData['email'] = $clientData['email'] ?? $userData['email'];
+
                 $client = Client::create($clientData);
                 $user->userable()->associate($client);
                 $user->save();
 
-                // Attach teams to the client if any
+                // Attach teams to the client
                 if (!empty($teams)) {
                     $client->teams()->sync($teams);
                 }
             }
 
-            // Attach teams to the user if any
+            // Attach teams to the user
             if (!empty($teams)) {
                 $user->teams()->sync($teams);
             }
