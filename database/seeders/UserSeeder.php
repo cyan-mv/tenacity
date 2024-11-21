@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'name' => 'cyan',
                 'email' => 'cyan.mv@gmail.com',
                 'password' => Hash::make('toast'),
-                'client' => null, // No client relationship for this user
+                'client' => null,
                 'teams' => [1, 2],
             ],
             [
@@ -39,7 +39,6 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'clementine',
                     'email' => 'clementine@gmail.com',
-                    'teams' => [1, 2, 3], // Clementine belongs to three teams
                 ],
                 'teams' => [1, 2, 3],
             ],
@@ -50,7 +49,6 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'Jenna',
                     'email' => 'jenna@gmail.com',
-                    'teams' => [1],
                 ],
                 'teams' => [1],
             ],
@@ -61,48 +59,32 @@ class UserSeeder extends Seeder
                 'client' => [
                     'name' => 'Emma',
                     'email' => 'emma@gmail.com',
-                    'teams' => [2],
                 ],
                 'teams' => [2],
             ],
         ];
 
-        // Create users, attach clients, and set teams
         foreach ($users as $userData) {
             // Extract client data if present
             $clientData = $userData['client'];
-            $clientTeams = $clientData['teams'] ?? [];
-            unset($clientData['teams'], $userData['client'], $userData['teams']);
+            $teams = $userData['teams'];
+            unset($userData['client'], $userData['teams']);
 
             // Create the user
             $user = User::create($userData);
 
-            // Attach a client if defined
+            // Handle the client relationship
             if ($clientData) {
                 $client = Client::create($clientData);
+                $user->userable()->associate($client);
+                $user->save();
 
                 // Attach teams to the client
-                if (!empty($clientTeams)) {
-                    $client->teams()->attach($clientTeams);
-                }
-
-                // Associate the client with the user
-                $user->userable_id = $client->id;
-                $user->userable_type = Client::class;
-                $user->save();
+                $client->teams()->sync($teams);
             }
 
             // Attach teams to the user
-            if (!empty($userData['teams'])) {
-                $user->teams()->attach($userData['teams']);
-            }
-            if ($user->email === 'cyan.mv@gmail.com') {
-                $user->teams()->attach([1, 2]); // Attaches to teams with IDs 1 and 2
-            } elseif ($user->email === 'venice@gmail.com') {
-                $user->teams()->attach(3); // Attaches to team with ID 3 (or adjust as needed)
-            }
-
-
+            $user->teams()->sync($teams);
         }
     }
 }
