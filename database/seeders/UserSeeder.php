@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
                     'name' => 'clementine',
                     'email' => 'clementine@gmail.com',
                 ],
-                'teams' => [1, 2, 3],
+                // 'teams' => [1, 2, 3],
             ],
             [
                 'name' => 'Jenna User',
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
                     'name' => 'Jenna',
                     'email' => 'jenna@gmail.com',
                 ],
-                'teams' => [1],
+                // 'teams' => [1],
             ],
             [
                 'name' => 'Emma User',
@@ -60,14 +60,14 @@ class UserSeeder extends Seeder
                     'name' => 'Emma',
                     'email' => 'emma@gmail.com',
                 ],
-                'teams' => [2],
+                // 'teams' => [2],
             ],
         ];
 
         foreach ($users as $userData) {
             // Extract client data if present
-            $clientData = $userData['client'];
-            $teams = $userData['teams'];
+            $clientData = $userData['client'] ?? null;
+            $teams = $userData['teams'] ?? []; // Provide a default empty array for teams
             unset($userData['client'], $userData['teams']);
 
             // Create the user
@@ -79,12 +79,16 @@ class UserSeeder extends Seeder
                 $user->userable()->associate($client);
                 $user->save();
 
-                // Attach teams to the client
-                $client->teams()->sync($teams);
+                // Attach teams to the client if any
+                if (!empty($teams)) {
+                    $client->teams()->sync($teams);
+                }
             }
 
-            // Attach teams to the user
-            $user->teams()->sync($teams);
+            // Attach teams to the user if any
+            if (!empty($teams)) {
+                $user->teams()->sync($teams);
+            }
         }
     }
 }
