@@ -20,6 +20,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->unsignedBigInteger('userable_id')->nullable();
+            $table->string('userable_type')->nullable();
             $table->timestamps();
         });
     }
@@ -32,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
