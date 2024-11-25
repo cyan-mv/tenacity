@@ -16,9 +16,13 @@ class UserTeamController extends Controller
             ? $user->userable->teams
             : [];
 
+        // Fetch all groups (or limit them based on your needs)
+        $groups = \App\Models\Group::all();
+
         return Inertia::render('Profile/UserTeams', [
             'user' => $user,
             'teams' => $teams,
+            'groups' => $groups,
         ]);
     }
 }
