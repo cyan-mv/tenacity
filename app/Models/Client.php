@@ -34,4 +34,11 @@ class Client extends Model
     {
         return $this->morphOne(User::class, 'userable');
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'client_group', 'client_id', 'group_id')
+//            ->withTimestamps()
+            ;
+    }
 }

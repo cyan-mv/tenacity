@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             TeamSeeder::class,  // Ensure teams are seeded before clients
 //            ClientSeeder::class,
+            GroupSeeder::class,
             UserSeeder::class,
             BranchSeeder::class,  // Add this line to call the BranchSeeder
-            GroupSeeder::class,
+
 //            CompanySeeder::class,
         ]);
 

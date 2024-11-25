@@ -42,6 +42,12 @@ class Group extends Model
         return $this->belongsToMany(Team::class, 'group_team', 'group_id', 'team_id')->limit(1);
     }
 
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class, 'client_group', 'group_id', 'client_id')
+//            ->withTimestamps()
+            ;
+    }
 
 
 }

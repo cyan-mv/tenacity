@@ -9,8 +9,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ClientResource extends Resource
 {
@@ -34,10 +32,11 @@ class ClientResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\Select::make('teams')
-                    ->label('Teams')
+                // Updated groups relationship
+                Forms\Components\Select::make('groups')
+                    ->label('Groups')
                     ->multiple()
-                    ->relationship('teams', 'name')
+                    ->relationship('groups', 'description')
                     ->required()
                     ->preload(),
             ]);
@@ -57,11 +56,11 @@ class ClientResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('teams.name')
-                    ->label('Teams')
+                // Updated groups relationship
+                Tables\Columns\TextColumn::make('groups.description')
+                    ->label('Groups')
                     ->formatStateUsing(function ($record) {
-                        // Fetch and implode the team names associated with the client
-                        return $record->teams->pluck('name')->implode(', ');
+                        return $record->groups->pluck('description')->implode(', ');
                     }),
 
                 Tables\Columns\TextColumn::make('created_at')
