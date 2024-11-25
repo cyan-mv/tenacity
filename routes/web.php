@@ -30,8 +30,21 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+//    Route::get('/dashboard', function () {
+//        return Inertia::render('Dashboard');
+//    })->name('dashboard');
+    Route::get('/dashboard', [UserTeamController::class, 'index'])->name('dashboard');
+//    Route::get('/dashboard', function () {
+//        $teams = auth()->user()->teams ?? []; // Adjust based on your data model
+//        return Inertia::render('Dashboard', [
+//            'teams' => $teams,
+//        ]);
+//    })->name('dashboard');
+//    Route::get('/dashboard', function () {
+//        $teams = auth()->user()->teams ?? []; // Adjust based on your data model
+//        return Inertia::render('Dashboard', [
+//            'teams' => $teams, // Pass the teams to the Dashboard component
+//        ]);
+//    })->name('dashboard');
     Route::get('/user-teams', [UserTeamController::class, 'index'])->name('user.teams');
 });
