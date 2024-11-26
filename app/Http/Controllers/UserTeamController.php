@@ -11,18 +11,24 @@ class UserTeamController extends Controller
     {
         $user = $request->user();
 
-        // Ensure userable exists and is a Client with teams
+        // Ensure userable exists and is a Client
         $teams = $user->userable && $user->userable instanceof \App\Models\Client
             ? $user->userable->teams
             : [];
 
-        // Fetch all groups (or limit them based on your needs)
-        $groups = \App\Models\Group::all();
+        // Fetch groups associated with the user (client-specific groups)
+        $userGroups = $user->userable && $user->userable instanceof \App\Models\Client
+            ? $user->userable->groups
+            : collect(); // Return an empty collection if no groups
+
+        // Fetch all available groups (for the "Available Groups" section)
+        $availableGroups = \App\Models\Group::all();
 
         return Inertia::render('Profile/UserTeams', [
             'user' => $user,
             'teams' => $teams,
-            'groups' => $groups,
+            'userGroups' => $userGroups,
+            'availableGroups' => $availableGroups,
         ]);
     }
 }
