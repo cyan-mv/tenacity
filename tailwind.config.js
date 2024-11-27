@@ -10,8 +10,8 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './resources/js/Pages/Profile/**/*.vue',
     ],
-
     theme: {
         extend: {
             fontFamily: {
@@ -19,6 +19,13 @@ export default {
             },
         },
     },
-
-    plugins: [forms, typography],
+    plugins: [
+        forms,
+        typography,
+        require('daisyui'), // Ensure DaisyUI is included here
+    ],
+    daisyui: {
+        themes: ['light', 'dark', 'cupcake'], // Optional: Configure themes
+    },
 };
+
