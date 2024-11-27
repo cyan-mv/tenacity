@@ -31,4 +31,39 @@ class UserTeamController extends Controller
             'availableGroups' => $availableGroups,
         ]);
     }
+
+    public function joinGroup(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'group_id' => 'required|exists:groups,id', // Ensure the group exists
+        ]);
+
+        $user = $request->user();
+
+        // Check if user is a client
+        if (!$user->userable || !($user->userable instanceof \App\Models\Client)) {
+            return response()->json(['error' => 'User is not a client'], 403);
+        }
+
+        $client = $user->userable;
+
+        // Check if the client is already part of the group
+        if ($client->groups()->where('group_id', $request->group_id)->exists()) {
+            return response()->json(['message' => 'You are already a member of this group'], 200);
+        }
+
+        try {
+            // Attach the group to the client
+            $client->groups()->attach($request->group_id, [
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            return response()->json(['message' => 'Successfully joined the group!'], 200);
+        } catch (\Exception $e) {
+//            \Log::error('Error attaching group to client: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to join the group. Please try again.'], 500);
+        }
+    }
+
 }

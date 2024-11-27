@@ -47,4 +47,7 @@ Route::middleware([
 //        ]);
 //    })->name('dashboard');
     Route::get('/user-teams', [UserTeamController::class, 'index'])->name('user.teams');
+
+    // Join Group route
+    Route::post('/user/join-group', [UserTeamController::class, 'joinGroup'])->name('user.join-group');
 });

@@ -1,5 +1,19 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+// import { ref } from 'vue';
+import axios from 'axios';
+
+// Function to handle joining a group
+const handleJoinGroup = async (groupId) => {
+    try {
+        const response = await axios.post('/user/join-group', {group_id: groupId});
+        alert(response.data.message || 'Successfully joined the group!');
+        location.reload(); // Refresh the page to update the user's groups
+    } catch (error) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+        alert(error.response?.data?.error || 'Failed to join the group. Please try again.');
+    }
+};
 </script>
 
 <template>
@@ -30,7 +44,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                         <h1>Your Groups</h1>
                         <p v-if="!userGroups.length">You don't belong to any groups.</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" v-else>
-                            <div v-for="group in userGroups" :key="group.id" class="card bg-base-100 image-full shadow-xl">
+                            <div v-for="group in userGroups" :key="group.id"
+                                 class="card bg-base-100 image-full shadow-xl">
                                 <figure>
                                     <img
                                         v-if="group.image"
@@ -54,7 +69,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                         <h1>Available Groups</h1>
                         <p v-if="!availableGroups.length">No groups available.</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" v-else>
-                            <div v-for="group in availableGroups" :key="group.id" class="card bg-base-100 image-full shadow-xl">
+                            <div v-for="group in availableGroups" :key="group.id"
+                                 class="card bg-base-100 image-full shadow-xl">
                                 <figure>
                                     <img
                                         v-if="group.image"
@@ -66,7 +82,9 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                                     <h2 class="card-title">{{ group.description }}</h2>
                                     <p>Code: {{ group.code }}, Prefix: {{ group.prefix }}</p>
                                     <div class="card-actions justify-end">
-                                        <button class="btn btn-secondary">Join Group</button>
+                                        <button class="btn btn-secondary" @click="handleJoinGroup(group.id)">Join
+                                            Group
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -95,3 +113,5 @@ export default {
     },
 };
 </script>
+
+
