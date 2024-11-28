@@ -55,7 +55,8 @@ const handleJoinGroup = async (groupId) => {
                                 </figure>
                                 <div class="card-body">
                                     <h2 class="card-title">{{ group.description }}</h2>
-                                    <p>Code: {{ group.code }}, Prefix: {{ group.prefix }}</p>
+<!--                                    <p>Code: {{ group.code }}, Prefix: {{ group.prefix }}</p>-->
+                                    <p>Card Number: {{ group.pivot.card_number }}</p>
                                     <div class="card-actions justify-end">
                                         <button class="btn btn-primary">View Details</button>
                                     </div>

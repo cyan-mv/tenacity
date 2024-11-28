@@ -18,9 +18,13 @@ class UserTeamController extends Controller
             : [];
 
         // Fetch groups associated with the user (client-specific groups)
+//        $userGroups = $user->userable && $user->userable instanceof \App\Models\Client
+//            ? $user->userable->groups
+//            : collect(); // Return an empty collection if no groups
         $userGroups = $user->userable && $user->userable instanceof \App\Models\Client
-            ? $user->userable->groups
-            : collect(); // Return an empty collection if no groups
+            ? $user->userable->groups()->withPivot('card_number')->get()
+            : collect();
+
 
         // Fetch all available groups (for the "Available Groups" section)
         $availableGroups = \App\Models\Group::all();
