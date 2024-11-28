@@ -18,6 +18,7 @@ class CreateGroupsTable extends Migration
             $table->string('color')->nullable(); // Hex color or CSS color name
             $table->string('image')->nullable(); // Path to the image file
 //            $table->foreignId('team_id')->constrained()->onDelete('cascade'); // Relation to Team model
+            $table->unsignedBigInteger('current_sequence')->default(0); // Add this column
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@ class CreateClientGroupTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('group_id');
+            $table->string('card_number', 20)->nullable(); // Add the card_number column
             $table->timestamps();
 
             // Foreign keys

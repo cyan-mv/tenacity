@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log; // Add this line
 
 class UserTeamController extends Controller
 {
@@ -34,36 +35,48 @@ class UserTeamController extends Controller
 
     public function joinGroup(Request $request)
     {
-        // Validate incoming request
         $request->validate([
-            'group_id' => 'required|exists:groups,id', // Ensure the group exists
+            'group_id' => 'required|exists:groups,id',
         ]);
 
         $user = $request->user();
 
-        // Check if user is a client
         if (!$user->userable || !($user->userable instanceof \App\Models\Client)) {
+//            \Log::error('User is not a client');
             return response()->json(['error' => 'User is not a client'], 403);
         }
 
         $client = $user->userable;
 
-        // Check if the client is already part of the group
         if ($client->groups()->where('group_id', $request->group_id)->exists()) {
+//            \Log::info('Client already belongs to the group.');
             return response()->json(['message' => 'You are already a member of this group'], 200);
         }
 
         try {
-            // Attach the group to the client
-            $client->groups()->attach($request->group_id, [
+            $group = \App\Models\Group::findOrFail($request->group_id);
+            $cardNumber = $group->generateNextCardNumber();
+
+//            \Log::info("Generated Card Number: {$cardNumber}");
+
+            $client->groups()->attach($group->id, [
+                'card_number' => $cardNumber,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            return response()->json(['message' => 'Successfully joined the group!'], 200);
+
+//            \Log::info("Successfully attached client {$client->id} to group {$group->id}.");
+
+            return response()->json([
+                'message' => 'Successfully joined the group!',
+                'card_number' => $cardNumber,
+            ], 200);
         } catch (\Exception $e) {
 //            \Log::error('Error attaching group to client: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to join the group. Please try again.'], 500);
         }
     }
+
+
 
 }
