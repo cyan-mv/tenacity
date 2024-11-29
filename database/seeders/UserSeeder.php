@@ -117,18 +117,18 @@ class UserSeeder extends Seeder
             }
         }
         // Retrieve the groups
-        $groups = Group::all();
-
-        // Retrieve clients (last 3 users in your case)
-        $clients = Client::whereIn('id', [1, 2, 3])->get(); // Adjust IDs as needed
-
-        // Associate groups with clients
-        $clients->each(function ($client, $index) use ($groups) {
-            // Assign groups to clients based on the index
-            $group = $groups->get($index); // Ensure groups exist
-            if ($group) {
-                $client->groups()->attach($group->id);
-            }
-        });
+//        $groups = Group::all();
+//
+//        // Retrieve clients (last 3 users in your case)
+//        $clients = Client::whereIn('id', [1, 2, 3])->get(); // Adjust IDs as needed
+//
+//        // Associate groups with clients
+//        $clients->each(function ($client, $index) use ($groups) {
+//            // Assign groups to clients based on the index
+//            $group = $groups->get($index); // Ensure groups exist
+//            if ($group) {
+//                $client->groups()->attach($group->id);
+//            }
+//        });
     }
 }
