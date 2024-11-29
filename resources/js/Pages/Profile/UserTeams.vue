@@ -27,18 +27,6 @@ const handleJoinGroup = async (groupId) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-
-                    <!-- Your Teams Section -->
-                    <div>
-                        <h1>Your Teams</h1>
-                        <p v-if="!teams.length">You don't have any teams.</p>
-                        <ul>
-                            <li v-for="team in teams" :key="team.id">
-                                {{ team.name }}
-                            </li>
-                        </ul>
-                    </div>
-
                     <!-- Your Groups Section -->
                     <div class="mt-8">
                         <h1>Your Groups</h1>
