@@ -97,4 +97,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return $this->morphTo();
     }
 
+    public function groups()
+{
+    return $this->belongsToMany(Group::class, 'users_groups', 'user_id', 'group_id')->withTimestamps();
+}
+
+
+
 }

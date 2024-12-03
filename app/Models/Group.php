@@ -52,4 +52,10 @@ class Group extends Model
             . $this->code
             . str_pad($this->current_sequence, $this->consecutive_length, '0', STR_PAD_LEFT);
     }
+
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'users_groups', 'group_id', 'user_id')->withTimestamps();
+}
+
 }
