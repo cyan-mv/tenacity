@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Group extends Model implements HasName
 {
     protected $fillable = [
         'code',
@@ -54,8 +55,21 @@ class Group extends Model
     }
 
     public function users()
-{
-    return $this->belongsToMany(User::class, 'users_groups', 'group_id', 'user_id')->withTimestamps();
-}
+    {
+        return $this->belongsToMany(User::class, 'group_user', 'group_id', 'user_id')->withTimestamps();
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'group_user', 'group_id', 'user_id')->withTimestamps();
+    }
+
+    // Implement the getFilamentName method
+    public function getFilamentName(): string
+    {
+        return $this->description; // Use 'description' as the name
+    }
+
+
 
 }

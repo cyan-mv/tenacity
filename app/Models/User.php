@@ -67,7 +67,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
      */
     public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsToMany(Group::class);
     }
 
     /**
@@ -98,9 +98,9 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     }
 
     public function groups()
-{
-    return $this->belongsToMany(Group::class, 'users_groups', 'user_id', 'group_id')->withTimestamps();
-}
+    {
+    return $this->belongsToMany(User::class, 'group_user', 'group_id', 'user_id')->withTimestamps();
+    }
 
 
 

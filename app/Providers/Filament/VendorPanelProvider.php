@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Vendor\Pages\Tenancy\RegisterGroup;
+use App\Models\Group;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -51,6 +53,9 @@ class VendorPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->tenant(Group::class) // Set Group as the tenant model
+            ->tenantRegistration(RegisterGroup::class) // Specify the tenant registration page
+            ->registration();
     }
 }
